@@ -9,23 +9,23 @@ import { Roles } from 'src/app/models/roles';
 })
 export class RoleComponent {
   roleList : Roles[] = [];
-  //this variable gets data from modal
+  // this variable is get data from model
   newRole : Roles = new Roles();
-  //this variable determines whetehr we are i  changing or creating a new user
+  // this variable determines wither we are in changing or creating new user
   creatingMode : boolean = true;
-  constructor(private roleService : RolesService){
+  constructor(private rolesService : RolesService){
     this.getAllRoles();
   }
-  //GET ALL ROLES FROM DATABASE
-  getAllRoles(){{
-    this.roleService.getAll().subscribe((response : Roles[])=>{
+  //Get All roles from database
+  getAllRoles(){
+    this.rolesService.getAll().subscribe((response : Roles[])=>{
       this.roleList = response;
-    })
+    });
   }
-  //delete role by id
+  //Delete role by id
   deleteRole(roleId : string){
     if(confirm("Are you sure you want to delete this role !!!")){
-      this.roleService.Delete(roleId).subscribe(()=>{
+      this.rolesService.Delete(roleId).subscribe(()=>{
         alert("Role Deleted Successfully");
         window.location.reload();
       });
@@ -36,20 +36,20 @@ export class RoleComponent {
     const newRole = {
       roleName : this.newRole.roleName
     }
-    this.roleService.Create(newRole).subscribe(()=>{
+    this.rolesService.Create(newRole).subscribe(()=>{
       alert("Role Created Successfully");
       window.location.reload();
     });
   }
   //Update role
   modifyRole(){
-    this.roleService.Update(this.newRole).subscribe(()=>{
+    this.rolesService.Update(this.newRole).subscribe(()=>{
       alert("Role Updated Successfully");
       window.location.reload();
     })
   }
   // function to verify the event
-  openModel(role: Role = new Roles()){
+  openModel(role: Roles = new Roles()){
     if(role.id == ""){
       this.newRole = new Roles();
     }else{
@@ -57,7 +57,4 @@ export class RoleComponent {
       this.newRole = role;
     }
   }
-}
-
-}
 }
